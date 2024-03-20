@@ -1,19 +1,15 @@
 import express from 'express'
-import { MovieController } from '../controllers/MovieController.js'
+import { BlogController } from '../controllers/BlogController.js'
 import { upload } from '../middlewares/multerService.js'
 import registerValidator from '../validators/registerValidator.js'
 
 const router = express.Router()
 
-const movieController = new MovieController()
+const blogController = new BlogController()
 
-router.get('/', movieController.get)
-router.get('/add', (req, res) => {
-    res.render('pages/addMovie', { errors: '' })
-})
-router.post('/add', upload, registerValidator, movieController.create)
-router.get('/edit/:id', movieController.edit)
-router.post('/edit/:id', upload, movieController.update)
-router.get('/delete/:id', movieController.remove)
+router.get('/', blogController.get)
+router.post('/add',upload,blogController.add)
+router.get('/login', (req,res)=>res.render('pages/login'))
+router.get('/signup', (req,res)=>res.render('pages/signup'))
 
 export default router

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const url = 'mongodb+srv://kevinchauhan:nf7nKrDb1L3kYfhA@cluster0.ngoyxsf.mongodb.net/mflix?retryWrites=true&w=majority&appName=Cluster0'
+const url = 'mongodb+srv://kevinchauhan:jNcRzBUflOzuHsgq@cluster0.ngoyxsf.mongodb.net/blogs?retryWrites=true&w=majority&appName=Cluster0'
 
 export const connectDb = async () => {
     try {

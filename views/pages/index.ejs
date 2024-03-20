@@ -1,81 +1,62 @@
 <%- include('../partials/header')%>
-
-<div class="div py-5 border-b text-end">
-  <a href="/add" class="bg-[#b00c1f] px-2 py-1">Add Movie</a>
+<div class="px-5 pb-5">
+  <ul class="timeline timeline-vertical">
+    <!-- button -->
+    <li>
+      <div class="timeline-start"></div>
+      <div class="timeline-middle">
+        <div class="timline-box">
+          <button
+            class="btn hover:bg-base-300 bg-base-100 text-white btn-small"
+            onclick="my_modal_1.showModal()"
+          >
+            Add Blog
+          </button>
+        </div>
+      </div>
+      <hr class="pb-5" />
+    </li>
+    <% blogs.forEach((blog,i)=>{ %> <% if(i%2===0){ %>
+    <li>
+      <hr />
+      <div class="timeline-start timeline-box">
+        <div class="text-xl font-bold"><%= blog.title %></div>
+        <div class="max-w-[160px] my-2">
+          <img
+            src="https://media.licdn.com/dms/image/D5612AQFVfcC3YIys9g/article-cover_image-shrink_600_2000/0/1710410239304?e=2147483647&v=beta&t=1rLEIDhxpnx4xQ3pzTvZrxV5FrfzZIixUoPcCFEDVvc"
+            alt=""
+          />
+        </div>
+        <p class="text-sm text-gray-300 line-clamp-2 md:line-clamp-none"><%= blog.description %></p>
+        <time class="font-mono italic text-gray-400 text-sm"><%= moment(blog.createdAt).format('D/M/y hh:mm A') %></time>
+      </div>
+      <div class="timeline-middle">
+        <div class="w-4 h-4 bg-white rounded-full"></div>
+      </div>
+      <div class="timeline-end italic"><%= blog.username %></div>
+     <hr />
+    </li>
+    <% }else{ %>
+    <li>
+      <hr />
+      <div class="timeline-start italic"><%= blog.username %></div>
+      <div class="timeline-middle">
+        <div class="w-4 h-4 bg-white rounded-full"></div>
+      </div>
+      <div class="timeline-end timeline-box">
+        <div class="text-xl font-bold"><%= blog.title %></div>
+        <div class="w-[160px] my-2">
+          <img
+            src="https://media.licdn.com/dms/image/D5612AQFVfcC3YIys9g/article-cover_image-shrink_600_2000/0/1710410239304?e=2147483647&v=beta&t=1rLEIDhxpnx4xQ3pzTvZrxV5FrfzZIixUoPcCFEDVvc"
+            alt=""
+          />
+        </div>
+        <p class="text-sm text-gray-300"><%= blog.description %></p>
+        <time class="font-mono italic text-gray-400 text-sm"><%= moment(blog.createdAt).format('D/M/y hh:mm A') %></time>
+      </div>
+      <hr />
+    </li>
+    <% } %> <% }) %>
+  </ul>
 </div>
-
-<div class="overflow-x-auto">
-  <table class="w-full mt-5">
-    <thead>
-      <tr>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">No.</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">Title</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">video</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">description</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">release year</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">genre</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">rating</th>
-        <th class="bg-[#1f1e1e] text-start py-3 px-2 text-sm">Action</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% if (movies.length>0){ movies.forEach((movie,i)=>{ %>
-      <tr>
-        <td class="bg-black py-3 px-3"><%=i+1%></td>
-        <td class="bg-black py-3 px-2">
-          <div class="flex items-center">
-            <img class="w-[50px] mr-3" src="<%= movie.poster %>" alt="" />
-            <span> <%= movie.title %> </span>
-          </div>
-        </td>
-        <td class="bg-black py-3 px-2">
-          <% if(movie.video){ %>
-          <video
-            class="w-[200px] mr-3 hover:cursor-pointer"
-            src="<%= movie.video %>"
-          ></video>
-          <% } else{ %> video not available <% } %>
-        </td>
-        <td class="bg-black py-3 px-2">
-          <p class="max-w-[400px] text-sm"><%= movie.description %></p>
-        </td>
-        <td class="bg-black py-3 px-2"><%= movie.releaseYear %></td>
-        <td class="bg-black py-3 px-2"><%= movie.genre %></td>
-        <td class="bg-black py-3 px-2"><%= movie.rating %></td>
-        <td class="bg-black py-3 px-2">
-          <a
-            href="/edit/<%=movie.id%>"
-            class="bg-green-500 mr-1 inline-block text-lg px-1 text-white rounded"
-            ><i class="ri-edit-2-line"></i
-          ></a>
-          <a
-            href="/delete/<%=movie.id%>"
-            class="bg-red-600 inline-block text-lg px-1 text-white rounded"
-            ><i class="ri-delete-bin-5-line"></i
-          ></a>
-        </td>
-      </tr>
-      <% }) } else{ %>
-      <tr>
-        <td colspan="8" class="text-center pt-2">No record found</td>
-      </tr>
-      <% } %>
-    </tbody>
-  </table>
-</div>
-
-<%- include('../partials/footer')%>
-
-<script>
-  const videos = document.querySelectorAll("video");
-  videos.forEach((video) => {
-    video.addEventListener("mouseover", () => {
-      video.controls = true;
-    });
-
-    video.addEventListener("mouseout", () => {
-      video.controls = false;
-    });
-  });
-</script>
+<%- include('../partials/modal')%> <%- include('../partials/footer')%>

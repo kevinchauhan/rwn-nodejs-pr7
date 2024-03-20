@@ -14,7 +14,4 @@ export const upload = multer({
     storage, limits: {
         fileSize: 10 * 1024 * 1024
     }
-}).fields([
-    { name: 'poster', maxCount: 1 },
-    { name: 'video', maxCount: 1 }]
-)
+}).single('image')

@@ -18,3 +18,9 @@ app.use(router)
 app.listen(PORT, () => {
     console.log(`server running on http://localhost:${PORT}`)
 })
+app.listen(PORT,'192.168.1.9', () => {
+    console.log(`server running on http://192.168.1.9:${PORT}`)
+})
+
+// moment(order.createdAt).format('hh:mm A')
+
