@@ -38,7 +38,7 @@ export class UserController {
         }
     }
     logout(req, res) {
-        res.clearCookie('user')
+        res.clearCookie('kc_blog')
         res.redirect('/')
     }
 }
