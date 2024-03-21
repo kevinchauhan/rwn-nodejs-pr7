@@ -31,19 +31,20 @@
         </div>
         <div class="flex-none">
           <ul class="menu menu-horizontal px-1">
-            <li><a href="/login">Login</a></li>
-            <li><a href="/signup">Sign up</a></li>
+            <% if(user.name){ %>
             <li>
               <details>
-                <summary>
-                  Hi, kevin
-                </summary>
+                <summary>Hi, <%=user.name %></summary>
                 <ul class="p-2 bg-base-300 rounded-t-none z-10">
-                  <li><a>Logout</a></li>
+                  <li><a href="/user/logout">Logout</a></li>
                 </ul>
               </details>
             </li>
+            <% }else{ %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign up</a></li>
+            <% } %>
           </ul>
         </div>
       </div>
-  </header>
+    </header>
