@@ -1,7 +1,7 @@
 <%- include('../partials/header')%>
 <div class="modal-box mx-auto mt-5">
   <h3 class="font-bold text-lg mb-5 text-center">Login</h3>
-  <form action="/user/login" method="post">
+  <form id="loginForm" action="/user/login" method="post">
     <div class="mb-3">
       <label class="input input-bordered flex items-center gap-2">
         <svg
@@ -20,11 +20,15 @@
         <input
           type="email"
           name="email"
+          id="email"
           value="<%=user.email%>"
           class="grow"
           placeholder="Email"
         />
       </label>
+      <div id="emailError" class="text-red-500 text-sm hidden">
+        Enter your email
+      </div>
     </div>
     <div class="mb-3">
       <label class="input input-bordered flex items-center gap-2">
@@ -43,12 +47,16 @@
         <input
           type="password"
           name="password"
+          id="password"
           class="grow"
           value="<%=user.password %>"
           value=""
           placeholder="*****"
         />
       </label>
+      <div id="passwordError" class="text-red-500 text-sm hidden">
+        Enter your password
+      </div>
     </div>
     <% if(error){ %>
     <p class="text-red-500 mb-3"><%=error%></p>
@@ -60,3 +68,55 @@
   </form>
 </div>
 <%- include('../partials/footer')%>
+
+<script>
+  const loginForm = document.getElementById("loginForm");
+
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Reset error messages
+    const errorFields = document.querySelectorAll(".error-message");
+    errorFields.forEach((field) => {
+      field.classList.add("hidden");
+    });
+
+    // Array to store error messages
+    const errors = [];
+
+    // Validate email
+    const emailInput = document.querySelector('input[name="email"]');
+    const emailError = document.getElementById("emailError");
+    if (!emailInput.value.trim()) {
+      emailError.classList.remove("hidden");
+      errors.push("Email is required");
+    }
+
+    // Validate password
+    const passwordInput = document.querySelector('input[name="password"]');
+    const passwordError = document.getElementById("passwordError");
+    if (!passwordInput.value.trim()) {
+      passwordError.classList.remove("hidden");
+      errors.push("Password is required");
+    }
+
+    // If errors exist, prevent form submission
+    if (errors.length > 0) {
+      return;
+    }
+
+    // If no errors, submit the form
+    this.submit();
+  });
+  // Hide error messages on input change
+  const inputFields = document.querySelectorAll("input, textarea");
+  inputFields.forEach((field) => {
+    field.addEventListener("input", () => {
+      console.log(field.id);
+      const errorField = document.getElementById(`${field.id}Error`);
+      if (errorField) {
+        errorField.classList.add("hidden");
+      }
+    });
+  });
+</script>

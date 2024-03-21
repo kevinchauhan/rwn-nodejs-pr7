@@ -1,7 +1,7 @@
-<%- include('../partials/header')%>
+<%- include('../partials/header',{user:''})%>
 <div class="modal-box mx-auto mt-5">
   <h3 class="font-bold text-lg mb-5 text-center">Sign up</h3>
-  <form action="/user/signup" method="post">
+  <form action="/user/signup" id="signupForm" method="post">
     <div class="mb-3">
       <label class="input input-bordered flex items-center gap-2">
         <svg
@@ -17,11 +17,15 @@
         <input
           type="text"
           name="name"
+          id="name"
           value="<%=user.name%>"
           class="grow"
           placeholder="Name"
         />
       </label>
+      <div id="nameError" class="text-red-500 text-sm hidden">
+        Name is required
+      </div>
     </div>
     <div class="mb-3">
       <label class="input input-bordered flex items-center gap-2">
@@ -41,11 +45,15 @@
         <input
           type="email"
           name="email"
+          id="email"
           value="<%=user.email%>"
           class="grow"
           placeholder="Email"
         />
       </label>
+      <div id="emailError" class="text-red-500 text-sm hidden">
+        Email is required
+      </div>
     </div>
     <div class="mb-3">
       <label class="input input-bordered flex items-center gap-2">
@@ -64,10 +72,14 @@
         <input
           type="password"
           name="password"
+          id="password"
           class="grow"
           placeholder="*****"
         />
       </label>
+      <div id="passwordError" class="text-red-500 text-sm hidden">
+        Password is required
+      </div>
     </div>
 
     <% if(error){ %>
@@ -81,3 +93,64 @@
   </form>
 </div>
 <%- include('../partials/footer')%>
+
+<script>
+  const signupForm = document.getElementById("signupForm");
+  const signupButton = document.getElementById("signupButton");
+
+  signupForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Reset error messages
+    const errorFields = document.querySelectorAll(".error-message");
+    errorFields.forEach((field) => {
+      field.classList.add("hidden");
+    });
+
+    // Array to store error messages
+    const errors = [];
+
+    // Validate name
+    const nameInput = document.querySelector('input[name="name"]');
+    const nameError = document.getElementById("nameError");
+    if (!nameInput.value.trim()) {
+      nameError.classList.remove("hidden");
+      errors.push("Name is required");
+    }
+
+    // Validate email
+    const emailInput = document.querySelector('input[name="email"]');
+    const emailError = document.getElementById("emailError");
+    if (!emailInput.value.trim()) {
+      emailError.classList.remove("hidden");
+      errors.push("Email is required");
+    }
+
+    // Validate password
+    const passwordInput = document.querySelector('input[name="password"]');
+    const passwordError = document.getElementById("passwordError");
+    if (!passwordInput.value.trim()) {
+      passwordError.classList.remove("hidden");
+      errors.push("Password is required");
+    }
+
+    // If errors exist, prevent form submission
+    if (errors.length > 0) {
+      return;
+    }
+
+    // If no errors, submit the form
+    this.submit();
+  });
+  // Hide error messages on input change
+  const inputFields = document.querySelectorAll("input, textarea");
+  inputFields.forEach((field) => {
+    field.addEventListener("input", () => {
+      console.log(field.id);
+      const errorField = document.getElementById(`${field.id}Error`);
+      if (errorField) {
+        errorField.classList.add("hidden");
+      }
+    });
+  });
+</script>

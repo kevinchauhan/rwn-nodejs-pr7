@@ -1,4 +1,3 @@
-import fs from 'fs'
 import blogModel from '../models/blogModel.js'
 import moment from 'moment'
 import userModel from '../models/userModel.js'
@@ -8,7 +7,7 @@ export class BlogController {
         try {
             let user
             if (req.cookies.user) {
-                user = await userModel.findById(req.cookies.user)
+                user = await userModel.findById(req.cookies.kc_blog)
             }
             const data = {
                 ...req.body,
@@ -28,7 +27,7 @@ export class BlogController {
         try {
             let user = ''
             if (req.cookies.user) {
-                user = await userModel.findById(req.cookies.user)
+                user = await userModel.findById(req.cookies.kc_blog)
             }
             const blogs = await blogModel.find().sort({ createdAt: -1 })
             res.render('pages/index', { blogs, moment, user })

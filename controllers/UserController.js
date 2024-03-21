@@ -24,7 +24,7 @@ export class UserController {
                 return res.render('pages/login', { error: 'Email or password is invalid', user: req.body })
             }
 
-            res.cookie('user', user.id, {
+            res.cookie('kc_blog', user.id, {
                 domain: 'localhost',
                 sameSite: 'strict',
                 maxAge: 1000 * 60 * 60, // 1hr
