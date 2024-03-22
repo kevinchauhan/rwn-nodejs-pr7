@@ -6,7 +6,7 @@ export class BlogController {
     async add(req, res) {
         try {
             let user
-            if (req.cookies.user) {
+            if (req.cookies.kc_blog) {
                 user = await userModel.findById(req.cookies.kc_blog)
             }
             const data = {
