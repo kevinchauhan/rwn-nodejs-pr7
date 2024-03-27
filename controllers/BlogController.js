@@ -6,8 +6,8 @@ export class BlogController {
     async add(req, res) {
         try {
             let user
-            if (req.cookies.kc_blog) {
-                user = await userModel.findById(req.cookies.kc_blog)
+            if (req.user) {
+                user = req.user
             }
             const data = {
                 ...req.body,
@@ -26,8 +26,8 @@ export class BlogController {
     async get(req, res) {
         try {
             let user = ''
-            if (req.cookies.kc_blog) {
-                user = await userModel.findById(req.cookies.kc_blog)
+            if (req.user) {
+                user = req.user
             }
             const blogs = await blogModel.find().sort({ createdAt: -1 })
             res.render('pages/index', { blogs, moment, user })

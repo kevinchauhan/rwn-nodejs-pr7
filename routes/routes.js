@@ -5,6 +5,7 @@ import registerValidator from '../validators/registerValidator.js'
 import { UserController } from '../controllers/UserController.js'
 import { guest } from '../middlewares/guest.js'
 import { authenticate } from '../middlewares/authenticate.js'
+import passport from 'passport'
 
 const router = express.Router()
 
@@ -17,7 +18,10 @@ router.post('/blog/add', authenticate, upload, blogController.add)
 
 // user
 router.post('/user/signup', userController.create)
-router.post('/user/login', userController.login)
+router.post('/user/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+}))
 router.get('/user/logout', userController.logout)
 
 // pages

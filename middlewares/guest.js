@@ -1,5 +1,5 @@
 export const guest = (req, res, next) => {
-    if (!req.cookies.kc_blog) {
+    if (!req.user) {
         return next()
     }
     res.redirect('/')
